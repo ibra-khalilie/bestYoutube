@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
 
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<YoutubeVideo> youtubeVideos) {
 
-            YoutubeAdapter youtubeAdapter = new YoutubeAdapter(youtubeVideos);
+            YoutubeAdapter youtubeAdapter = new YoutubeAdapter(youtubeVideos,context);
             rvMainActivity.setAdapter(youtubeAdapter);
         }
 

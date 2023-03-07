@@ -12,7 +12,7 @@
         android:theme="@style/Theme.MyBestYoutube"
         tools:targetApi="31">
         <activity
-            android:name=".DetailActivity"
+            android:name=".Vue.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".Vue.AddYoutubeActivity"
