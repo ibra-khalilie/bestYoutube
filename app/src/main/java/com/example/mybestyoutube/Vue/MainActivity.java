@@ -1,8 +1,18 @@
 package com.example.mybestyoutube.Vue;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.mybestyoutube.Adapter.YoutubeAdapter;
 import com.example.mybestyoutube.Dao.YoutubeDao;
@@ -20,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         rvMainActivity = findViewById(R.id.rvMainActivity);
 
 
-        //Crée le layoutManager pour le Recycle
+        //CrÃ©e le layoutManager pour le Recycle
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         rvMainActivity.setHasFixedSize(true);
 
@@ -53,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //test la valeur de l'id de l'item selectionné
+        //test la valeur de l'id de l'item selectionnÃ©
 
         switch (item.getItemId()){
 
