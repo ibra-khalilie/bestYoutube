@@ -12,6 +12,13 @@
         android:theme="@style/Theme.MyBestYoutube"
         tools:targetApi="31">
         <activity
+            android:name=".DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Vue.AddYoutubeActivity"
+            android:exported="false"
+            android:parentActivityName=".Vue.MainActivity" />
+        <activity
             android:name=".Vue.MainActivity"
             android:exported="true">
             <intent-filter>
