@@ -5,14 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-<<<<<<< Updated upstream
-import android.annotation.SuppressLint;
-=======
-<<<<<<< HEAD
-=======
-import android.app.SearchManager;
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -37,16 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
 
 
-<<<<<<< Updated upstream
-    @SuppressLint("MissingInflatedId")
-=======
-<<<<<<< HEAD
-=======
+
     private YoutubeAdapter youtubeAdapter;
 
 
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,15 +114,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<YoutubeVideo> youtubeVideos) {
 
-<<<<<<< Updated upstream
-            YoutubeAdapter youtubeAdapter = new YoutubeAdapter(youtubeVideos);
-=======
-<<<<<<< HEAD
+
             YoutubeAdapter youtubeAdapter = new YoutubeAdapter(youtubeVideos,context);
-=======
+
             youtubeAdapter = new YoutubeAdapter(youtubeVideos,context);
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
+
             rvMainActivity.setAdapter(youtubeAdapter);
         }
 
