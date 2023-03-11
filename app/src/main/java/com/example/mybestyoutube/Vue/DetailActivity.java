@@ -4,7 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+<<<<<<< Updated upstream
+=======
 import android.content.Intent;
+<<<<<<< HEAD
+=======
+import android.net.Uri;
+import android.os.Build;
+>>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
+>>>>>>> Stashed changes
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +38,14 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+<<<<<<< Updated upstream
+=======
         getSupportActionBar().hide();
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+
+>>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
 
         context = getApplicationContext();
 
