@@ -117,11 +117,12 @@ public class AddYoutubeActivity extends AppCompatActivity implements AdapterView
 
     //Regex pour Verifie Url
     public boolean isUrlValid(String url) {
-        String regex = "^((http[s]?|ftp):\\/\\/)?([a-zA-Z0-9]+\\.)?[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,6}(\\/[a-zA-Z0-9\\-._\\?,'+&amp;%$#=~]*)*$";
+        String regex = "^(http|https|ftp|sftp):\\/\\/([a-zA-Z0-9]+\\.?)+[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,6}(\\/[a-zA-Z0-9\\-._\\?,'+&amp;%$#=~]*)*$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(url);
         return matcher.matches();
     }
+
 
 
 
