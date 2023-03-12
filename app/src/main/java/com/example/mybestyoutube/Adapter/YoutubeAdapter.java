@@ -117,7 +117,7 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.edtiText:
-                                Toast.makeText(context, youtubeVideo.getTitre() + " Well be updated", Toast.LENGTH_SHORT).show();
+
 
                                 Intent intent = new Intent(context, UpdateYoutubeActivity.class);
                                 intent.putExtra("editYoutubeVideo",youtubeVideo);
@@ -125,17 +125,30 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
                                 context.startActivity(intent);
                                 return true;
                             case R.id.delete:
-                                Toast.makeText(context, youtubeVideo.getTitre() + " Well be deleted", Toast.LENGTH_SHORT).show();
 
-
-                                //alert ne foncctionne pas propnleme avec le context
-                                
-                                /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                builder.setTitle("Titre de l'alerte");
-                                builder.setMessage("Message de l'alerte");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(view.getRootView().getContext());
+                                builder.setTitle("Confirmation !!!");
+                                builder.setMessage("Are you sure to deleted " + youtubeVideo.getTitre() + " ?");
                                 builder.setIcon(R.drawable.ic_warning);
+                                builder.setCancelable(false);
                                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+
+
+                                        YoutubeDao youtubeDao = new YoutubeDao(context);
+
+                                        int result =  youtubeDao.delete(youtubeVideo);
+
+                                        if (result > 0)
+                                        {
+                                            Toast.makeText(context,"deleted " + result,Toast.LENGTH_SHORT);
+                                            youtubeVideos.remove(youtubeVideo);
+                                            notifyDataSetChanged();
+                                        }
+                                        else {
+
+                                            Toast.makeText(context,"Failed " + result,Toast.LENGTH_SHORT);
+                                        }
 
                                     }
                                 });
@@ -146,25 +159,7 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
                                     }
                                 });
                                 AlertDialog alert = builder.create();
-                                alert.show();*/
-
-
-                                YoutubeDao youtubeDao = new YoutubeDao(context);
-
-                                int result =  youtubeDao.delete(youtubeVideo);
-
-                                if (result > 0)
-                                {
-                                    Toast.makeText(context,"deleted " + result,Toast.LENGTH_SHORT);
-                                    youtubeVideos.remove(youtubeVideo);
-                                    notifyDataSetChanged();
-                                }
-                                else {
-
-                                    Toast.makeText(context,"Failed " + result,Toast.LENGTH_SHORT);
-                                }
-
-
+                                alert.show();
 
 
                                 return true;

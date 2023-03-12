@@ -84,6 +84,8 @@ public class UpdateYoutubeActivity extends AppCompatActivity {
 
                 update(view);
 
+                Toast.makeText(context, youtubeVideo.getTitre() + " Well be updated", Toast.LENGTH_SHORT).show();
+
                 finish();
             }
         });
