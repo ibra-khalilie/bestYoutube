@@ -126,6 +126,9 @@
                 android:drawableRight="@drawable/ic_web"
                 android:ems="10"
                 android:inputType="textUri"
+                android:hint="http[s]://exemple.com"
+                android:textSize="16sp"
+                
                 android:textColor="#8c8c8c"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
