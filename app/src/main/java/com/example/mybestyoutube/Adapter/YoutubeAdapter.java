@@ -1,52 +1,50 @@
 package com.example.mybestyoutube.Adapter;
 
-<<<<<<< Updated upstream
-=======
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-<<<<<<< HEAD
-=======
 import android.database.sqlite.SQLiteDatabase;
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybestyoutube.Dao.YoutubeDao;
 import com.example.mybestyoutube.Model.YoutubeVideo;
 import com.example.mybestyoutube.R;
-<<<<<<< Updated upstream
-=======
 import com.example.mybestyoutube.Vue.DetailActivity;
-<<<<<<< HEAD
-=======
+import com.example.mybestyoutube.Vue.MainActivity;
 import com.example.mybestyoutube.Vue.UpdateYoutubeActivity;
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
 
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
-public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeAdapterViewHolder>{
+public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeAdapterViewHolder> implements Filterable {
 
 
-<<<<<<< HEAD
-=======
-
-<<<<<<< Updated upstream
-=======
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
     Context context;
->>>>>>> Stashed changes
     private List<YoutubeVideo> youtubeVideos;
+    
+    private List<YoutubeVideo> getYoutubeVideosListFiltered;
 
 
     public YoutubeAdapter(List<YoutubeVideo> youtubeVideos, Context context){
         this.youtubeVideos = youtubeVideos;
         this.context = context;
+        this.getYoutubeVideosListFiltered = youtubeVideos;
 
 
     }
@@ -56,84 +54,57 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
 
         public TextView tvTitre;
         public  TextView tvDescription;
-<<<<<<< Updated upstream
-
-
-=======
         public CardView cardView;
-<<<<<<< HEAD
-=======
         public ImageView mMenus;
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
         public YoutubeAdapterViewHolder(View itemView){
             super(itemView);
 
             tvTitre = itemView.findViewById(R.id.tvTitre);
             tvDescription = itemView.findViewById(R.id.tvDescription);
-<<<<<<< Updated upstream
-=======
             cardView = itemView.findViewById(R.id.carderView);
-<<<<<<< HEAD
-=======
             mMenus = itemView.findViewById(R.id.mMenus);
 
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
 
         }
 
     }
 
-    public YoutubeAdapter(List<YoutubeVideo> youtubeVideos){
-        this.youtubeVideos = youtubeVideos;
 
-
-    }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
     @Override
     public YoutubeAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.youtube_item,parent,false);
-        return new YoutubeAdapterViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.youtube_item,parent,false);
+        YoutubeAdapterViewHolder youtubeAdapterViewHolder = new YoutubeAdapterViewHolder(view);
+
+        return youtubeAdapterViewHolder;
     }
 
     @Override
     public void onBindViewHolder(YoutubeAdapterViewHolder holder, int position) {
 
-        YoutubeVideo youtubeVideo = youtubeVideos.get(position);
+        int itemPosition = holder.getAbsoluteAdapterPosition();
+
+        YoutubeVideo youtubeVideo = youtubeVideos.get(itemPosition);
         holder.tvTitre.setText(youtubeVideo.getTitre());
         holder.tvDescription.setText(youtubeVideo.getDescription());
 
-<<<<<<< Updated upstream
-=======
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-<<<<<<< HEAD
-                Toast.makeText(context,"clicked " + position,Toast.LENGTH_SHORT).show();
-=======
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
                 Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("titre", youtubeVideos.get(position).getTitre());
-                intent.putExtra("description", youtubeVideos.get(position).getDescription());
-                intent.putExtra("url",youtubeVideos.get(position).getUrl());
-                intent.putExtra("categorie", youtubeVideos.get(position).getCategorie());
+                intent.putExtra("titre", youtubeVideos.get(itemPosition).getTitre());
+                intent.putExtra("description", youtubeVideos.get(itemPosition).getDescription());
+                intent.putExtra("url",youtubeVideos.get(itemPosition).getUrl());
+                intent.putExtra("categorie", youtubeVideos.get(itemPosition).getCategorie());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });
 
 
-<<<<<<< HEAD
-=======
 
         // suppression et modification
         holder.mMenus.setOnClickListener(new View.OnClickListener() {
@@ -154,16 +125,29 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
                                 context.startActivity(intent);
                                 return true;
                             case R.id.delete:
-                                Toast.makeText(context, youtubeVideo.getTitre() + " Well be delete", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, youtubeVideo.getTitre() + " Well be deleted", Toast.LENGTH_SHORT).show();
 
+
+                                //alert ne foncctionne pas propnleme avec le context
+                                
                                 /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                builder.setTitle("confirmation !!!");
-                                builder.setMessage("Are you sure to delete " + youtubeVideo.getTitre() + " ?");
+                                builder.setTitle("Titre de l'alerte");
+                                builder.setMessage("Message de l'alerte");
                                 builder.setIcon(R.drawable.ic_warning);
-                                builder.setPositiveButton("Yes",null);
-                                builder.setNegativeButton("No",null);
+                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
 
-                                builder.create().show();*/
+                                    }
+                                });
+                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        dialog.cancel();
+                                    }
+                                });
+                                AlertDialog alert = builder.create();
+                                alert.show();*/
+
 
                                 YoutubeDao youtubeDao = new YoutubeDao(context);
 
@@ -202,13 +186,50 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
         });
 
 
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
     }
 
     @Override
     public int getItemCount() {
         return youtubeVideos.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                FilterResults filterResults = new FilterResults();
+
+                if (charSequence == null | charSequence.length() == 0){
+                    filterResults.count = getYoutubeVideosListFiltered.size();
+                    filterResults.values = getYoutubeVideosListFiltered;
+                }else {
+
+                    String searchChr = charSequence.toString().toLowerCase();
+
+                    List<YoutubeVideo> resultData = new ArrayList<>();
+
+                    for (YoutubeVideo youtubeVideo : getYoutubeVideosListFiltered){
+                        if (youtubeVideo.getTitre().toLowerCase().contains(searchChr)){
+                            resultData.add(youtubeVideo);
+                        }
+                    }
+                    filterResults.count = resultData.size();
+                    filterResults.values = resultData;
+
+                }
+                return filterResults;
+
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                youtubeVideos = (List<YoutubeVideo>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
     }
 
 }

@@ -1,21 +1,18 @@
 package com.example.mybestyoutube.Vue;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
-<<<<<<< Updated upstream
-=======
+import android.content.DialogInterface;
 import android.content.Intent;
-<<<<<<< HEAD
-=======
 import android.net.Uri;
 import android.os.Build;
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
->>>>>>> Stashed changes
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mybestyoutube.R;
@@ -33,27 +30,21 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnVoir;
 
 
-
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-<<<<<<< Updated upstream
-=======
-        getSupportActionBar().hide();
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 
->>>>>>> parent of 2266c2a (Revert "DetailActivity fonctionne")
 
         context = getApplicationContext();
 
-        detailTitre = findViewById(R.id.detailTitle);
-        detailDescription = findViewById(R.id.detailDescription);
-        detailUrl = findViewById(R.id.detailUrl);
-        detailCategorie = findViewById(R.id.detailCategorie);
+        detailTitre = findViewById(R.id.addTitle);
+        detailDescription = findViewById(R.id.addDescription);
+        detailUrl = findViewById(R.id.addUrl);
+        detailCategorie = findViewById(R.id.addCategorie);
         btnVoir = findViewById(R.id.btnVoir);
+
 
         Intent intent = getIntent();
         String titre = intent.getExtras().getString("titre");
@@ -68,6 +59,18 @@ public class DetailActivity extends AppCompatActivity {
         detailCategorie.setText(categorie);
 
 
+        btnVoir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(url));
+                try {
+                    DetailActivity.this.startActivity(webIntent);
+                } catch (ActivityNotFoundException ex) {
+                }
+            }
+        });
 
 
     }

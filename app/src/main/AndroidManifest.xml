@@ -12,14 +12,7 @@
         android:theme="@style/Theme.MyBestYoutube"
         tools:targetApi="31">
         <activity
-            android:name=".DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Vue.AddYoutubeActivity"
-            android:exported="false"
-            android:parentActivityName=".Vue.MainActivity" />
-        <activity
-            android:name=".Vue.MainActivity"
+            android:name=".Vue.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Vue.UpdateYoutubeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Vue.DetailActivity"
+            android:exported="false"
+            android:parentActivityName=".Vue.MainActivity" />
+        <activity
+            android:name=".Vue.AddYoutubeActivity"
+            android:exported="false"
+            android:parentActivityName=".Vue.MainActivity" />
+        <activity
+            android:name=".Vue.MainActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

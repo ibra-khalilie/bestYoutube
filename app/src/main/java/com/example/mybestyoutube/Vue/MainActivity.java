@@ -5,19 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mybestyoutube.Adapter.YoutubeAdapter;
 import com.example.mybestyoutube.Dao.YoutubeDao;
 import com.example.mybestyoutube.Model.YoutubeVideo;
 import com.example.mybestyoutube.R;
-import com.example.mybestyoutube.RecyclerViewInterface;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
 
 
-
     private YoutubeAdapter youtubeAdapter;
 
 
@@ -38,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //setContentView(R.layout.activity_add_youtube);
 
 
         //recupere le RecyclerView
@@ -52,14 +56,36 @@ public class MainActivity extends AppCompatActivity {
         rvMainActivity.setLayoutManager(layoutManager);
 
 
+
         context = getApplicationContext();
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Type here to search");
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                youtubeAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
+
         return true;
     }
 
@@ -71,13 +97,18 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.ajoutYoutube:
+
                 //Creer un intent
                 Intent intent = new Intent(getApplicationContext(), AddYoutubeActivity.class);
 
                 //lance l'activity
                 startActivity(intent);
-
                 return true;
+
+            case R.id.action_search:
+                return true;
+
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -91,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         todoAsyncTasks.execute();
 
     }
+
 
     public class TodoAsyncTasks extends AsyncTask<String, String, List<YoutubeVideo>> {
 
@@ -108,17 +140,14 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
             return youtubeVideos;
         }
 
         @Override
         protected void onPostExecute(List<YoutubeVideo> youtubeVideos) {
 
-
-            YoutubeAdapter youtubeAdapter = new YoutubeAdapter(youtubeVideos,context);
-
             youtubeAdapter = new YoutubeAdapter(youtubeVideos,context);
-
             rvMainActivity.setAdapter(youtubeAdapter);
         }
 

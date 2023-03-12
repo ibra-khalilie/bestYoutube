@@ -114,7 +114,7 @@ public class YoutubeDao extends Dao{
     }
 
 
-    public void update(YoutubeVideo youtubeVideo){
+    public int update(YoutubeVideo youtubeVideo){
 
         //ourvre db
         open();
@@ -128,23 +128,25 @@ public class YoutubeDao extends Dao{
 
 
         //execute la requtte update avec la clause where sur id
-        db.update(YoutubeDbHelper.TABLE_NAME, values,YoutubeDbHelper.KEY + " = ?", new String[]{youtubeVideo.getId().toString()});
+        int dbResult = db.update(YoutubeDbHelper.TABLE_NAME, values,YoutubeDbHelper.KEY + " = ?", new String[]{youtubeVideo.getId().toString()});
 
         //ferme
         close();
 
+        return dbResult;
     }
 
-    public void delete(YoutubeVideo youtubeVideo){
+    public int delete(YoutubeVideo youtubeVideo){
 
         //ouvre bdd
         open();
 
         //execute la requtte suprimer avec la clause where sur id
-        db.delete(YoutubeDbHelper.TABLE_NAME,YoutubeDbHelper.KEY + " = ?", new String[]{youtubeVideo.getId().toString()});
+        int dbResult = db.delete(YoutubeDbHelper.TABLE_NAME,YoutubeDbHelper.KEY + " = ?", new String[]{youtubeVideo.getId().toString()});
 
         //ferme
         close();
 
+        return dbResult;
     }
 }

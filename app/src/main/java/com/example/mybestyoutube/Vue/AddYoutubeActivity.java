@@ -1,6 +1,10 @@
 package com.example.mybestyoutube.Vue;
 
+import static java.lang.ref.Cleaner.create;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +21,8 @@ import com.example.mybestyoutube.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AddYoutubeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -34,18 +39,19 @@ public class AddYoutubeActivity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_youtube);
+        getSupportActionBar().hide();
 
         context = getApplicationContext();
 
-        edtTitle = findViewById(R.id.edtTitle);
-        edtDesc = findViewById(R.id.edtDesc);
-        edtUrl = findViewById(R.id.edtUrl);
+        edtTitle = findViewById(R.id.addTitle);
+        edtDesc = findViewById(R.id.addDescription);
+        edtUrl = findViewById(R.id.addUrl);
 
-        btAnnuler = findViewById(R.id.btAnnuler);
-        btnAjouter = findViewById(R.id.btnAjouter);
+        btAnnuler = findViewById(R.id.updBtAnnuler);
+        btnAjouter = findViewById(R.id.updBtnAjouter);
 
 
-        spCategorie = findViewById(R.id.spinner);
+        spCategorie = findViewById(R.id.addCategorie);
 
 
         createSpinner();
@@ -65,7 +71,7 @@ public class AddYoutubeActivity extends AppCompatActivity implements AdapterView
 
 
 
-                if (titre.length() > 0 && description.length() > 0 && url.length() > 0){
+                if (titre.length() > 0 && description.length() > 0 && isUrlValid(url)){
 
 
                     YoutubeDao youtubeDao = new YoutubeDao(context);
@@ -82,13 +88,17 @@ public class AddYoutubeActivity extends AppCompatActivity implements AdapterView
 
                 }else {
 
-
-                    Toast toast = Toast.makeText(context, "le Titre,Description et Url ne doit pas etre vide",Toast.LENGTH_SHORT);
-                    toast.show();
+                    if (titre.length() == 0) {
+                        edtTitle.setError("Title must not be empty");
+                    }
+                    if (description.length() == 0) {
+                        edtDesc.setError("Description must not be empty");
+                    }
+                    if (!isUrlValid(url)) {
+                        edtUrl.setError("Invalid URL");
+                    }
 
                 }
-
-
 
 
             }
@@ -104,11 +114,21 @@ public class AddYoutubeActivity extends AppCompatActivity implements AdapterView
         });
 
     }
-//spinner 
+
+    //Regex pour Verifie Url
+    public boolean isUrlValid(String url) {
+        String regex = "^((http[s]?|ftp):\\/\\/)?([a-zA-Z0-9]+\\.)?[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,6}(\\/[a-zA-Z0-9\\-._\\?,'+&amp;%$#=~]*)*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(url);
+        return matcher.matches();
+    }
+
+
+
+    //Creer un spinner
     private void createSpinner(){
 
-
-        Spinner spinner =  findViewById(R.id.spinner);
+        Spinner spinner =  findViewById(R.id.addCategorie);
 
         spinner.setOnItemSelectedListener(this);
 
@@ -134,9 +154,6 @@ public class AddYoutubeActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        String item = adapterView.getItemAtPosition(i).toString();
-
-        Toast.makeText(adapterView.getContext(), "sélectionner: " + item, Toast.LENGTH_LONG).show();
     }
 
     @Override
