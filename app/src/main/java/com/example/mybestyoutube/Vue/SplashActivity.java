@@ -3,6 +3,7 @@ package com.example.mybestyoutube.Vue;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -19,11 +20,16 @@ public class SplashActivity extends AppCompatActivity {
     private TextView textAnimYoutube;
 
     private static int SPLASH_TIMEOUT = 5000;
+    private MediaPlayer mediaPlayer;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.sound);
+        mediaPlayer.start();
         getSupportActionBar().hide();
 
         textAnimWelcome = findViewById(R.id.textAnimWelcome);
@@ -42,5 +48,13 @@ public class SplashActivity extends AppCompatActivity {
 
         Animation animation2 = AnimationUtils.loadAnimation(SplashActivity.this,R.anim.animation1);
         textAnimYoutube.startAnimation(animation2);
+
+
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+    }
+
 }
