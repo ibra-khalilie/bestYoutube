@@ -131,7 +131,14 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
                                 builder.setMessage("Are you sure to deleted " + youtubeVideo.getTitre() + " ?");
                                 builder.setIcon(R.drawable.ic_warning);
                                 builder.setCancelable(false);
-                                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+
                                     public void onClick(DialogInterface dialog, int id) {
 
 
@@ -151,12 +158,13 @@ public class YoutubeAdapter extends RecyclerView.Adapter<YoutubeAdapter.YoutubeA
                                         }
 
                                     }
-                                });
-                                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    /*
+
                                     public void onClick(DialogInterface dialog, int id) {
 
                                         dialog.cancel();
-                                    }
+                                    }*/
+
                                 });
                                 AlertDialog alert = builder.create();
                                 alert.show();
