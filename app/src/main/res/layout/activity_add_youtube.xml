@@ -188,12 +188,13 @@
 
 
     <Button
-        android:id="@+id/updBtAnnuler"
+
+        android:id="@+id/updBtnAjouter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:text="add"
+        android:paddingLeft="49dp"
+        android:paddingRight="49dp"
         android:background="@drawable/btn_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -202,12 +203,12 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <Button
-        android:id="@+id/updBtnAjouter"
+        android:id="@+id/updBtAnnuler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add"
-        android:paddingLeft="49dp"
-        android:paddingRight="49dp"
+        android:text="Cancel"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         android:background="@drawable/btn_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
